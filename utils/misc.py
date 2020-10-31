@@ -7,4 +7,4 @@ def print_app_version():
 
 
 def get_string_from_dict(_dict: dict) -> str:
-    return json.dump(_dict)
+    return json.dumps(_dict)
