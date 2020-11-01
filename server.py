@@ -5,4 +5,3 @@ class Server:
 
     def __new__(cls, *args, **kwargs):
         pass
-
