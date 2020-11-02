@@ -27,6 +27,7 @@ class Server:
         self.last_notified = 0
 
         self.lifespan = None
+        self.servers = []
 
     def run(self, sockets=None):
         self.config.setup_event_loop()
@@ -141,14 +142,8 @@ class Server:
             except ValueError:
                 message, color_message = _get_server_start_message()
 
-            logger.info(
-                message,
-                protocol_name,
-                config.host,
-                port,
-                extra={"color_message": color_message},
-            )
-            self.servers = [server]
+            logger.info(f'{protocol_name} {host} {port}')
+            self.servers.append(server)
 
         self.started = True
 
