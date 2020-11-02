@@ -1,6 +1,7 @@
 import os
 import asyncio
 import logging
+import functools
 
 
 logger = logging.getLogger('Main')
@@ -40,9 +41,7 @@ class Server:
 
         self.install_signal_handlers()
 
-        message = "Started server process [%d]"
-        color_message = "Started server process [" + click.style("%d", fg="cyan") + "]"
-        logger.info(message, process_id, extra={"color_message": color_message})
+        logger.info(f'Started server process [{process_id}]')
 
         await self.startup(sockets=sockets)
         if self.should_exit:
@@ -50,13 +49,7 @@ class Server:
         await self.main_loop()
         await self.shutdown(sockets=sockets)
 
-        message = "Finished server process [%d]"
-        color_message = "Finished server process [" + click.style("%d", fg="cyan") + "]"
-        logger.info(
-            "Finished server process [%d]",
-            process_id,
-            extra={"color_message": color_message},
-        )
+        logger.info(f'Finished server process [{process_id}]')
 
     async def startup(self, sockets=None):
         await self.lifespan.startup()
