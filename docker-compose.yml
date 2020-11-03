@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  web_api:
+    build:
+      dockerfile: Dockerfile
+    command: echo "RUN"
