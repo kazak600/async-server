@@ -5,7 +5,7 @@ import logging
 import functools
 import socket
 import platform
-
+from ipaddress import ip_address, IPv6Address, IPv4Address
 
 logger = logging.getLogger('Main')
 
@@ -134,15 +134,15 @@ class Server:
             try:
                 addr = ip_address(config.host)
                 if isinstance(addr, IPv6Address):
-                    message, color_message = _get_server_start_message(
-                        is_ipv6_message=True
-                    )
+                    message = 'it\'s IPv6'
                 elif isinstance(addr, IPv4Address):
-                    message, color_message = _get_server_start_message()
-            except ValueError:
-                message, color_message = _get_server_start_message()
+                    message = 'it\'s IPv4'
+                else:
+                    message = ''
+            except ValueError as error:
+                message = error
 
-            logger.info(f'{protocol_name} {host} {port}')
+            logger.info(f'{protocol_name} {config.host} {port} {message}')
             self.servers.append(server)
 
         self.started = True
