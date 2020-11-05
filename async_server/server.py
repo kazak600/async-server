@@ -1,4 +1,5 @@
 import os
+import signal
 import sys
 import asyncio
 import logging
@@ -10,6 +11,7 @@ from email.utils import formatdate
 from ipaddress import ip_address, IPv6Address, IPv4Address
 
 logger = logging.getLogger('Main')
+HANDLED_SIGNALS = []
 
 
 class ServerState:
@@ -17,6 +19,7 @@ class ServerState:
     def __init__(self):
         self.total_requests = 0
         self.connections = []
+        self.tasks = []
 
 
 class Server:
