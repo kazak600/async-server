@@ -1,4 +1,5 @@
 import unittest
+from async_server.server import Server
 
 
 class MainTestCase(unittest.TestCase):
@@ -11,3 +12,8 @@ class MainTestCase(unittest.TestCase):
 
     def test_main(self):
         self.assertEqual(True, False)
+
+    async def test_server_startup(self):
+        server = Server({})
+        await server.run()
+        self.assertEqual(server.config, {})
