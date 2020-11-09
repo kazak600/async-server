@@ -17,3 +17,8 @@ class MainTestCase(unittest.TestCase):
         server = Server({})
         await server.run()
         self.assertEqual(server.config, {})
+
+    async def test_server_serve(self):
+        server = Server({})
+        await server.serve()
+        self.assertEqual(server.servers, [])
