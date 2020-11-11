@@ -1,5 +1,5 @@
 import logging
-from typing import MutableMapping, Any, Iterable, Optional, Mapping
+from typing import MutableMapping, Any, Iterable, Optional, Mapping, Iterator
 
 
 class Application(MutableMapping[str, Any]):
@@ -40,3 +40,27 @@ class Application(MutableMapping[str, Any]):
         self._on_startup.append(self._cleanup_ctx._on_startup)
         self._on_cleanup.append(self._cleanup_ctx._on_cleanup)
         self._client_max_size = client_max_size
+
+    def __eq__(self, other: object) -> bool:
+        return self is other
+
+    def __getitem__(self, key: str) -> Any:
+        return self._state[key]
+
+    def _check_frozen(self) -> None:
+        if self._frozen:
+            raise RuntimeError('Changing state of started or joined application is forbidden')
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self._check_frozen()
+        self._state[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        self._check_frozen()
+        del self._state[key]
+
+    def __len__(self) -> int:
+        return len(self._state)
+
+    def __iter__(self) -> Iterator[str]:
+        return iter(self._state)
