@@ -2,6 +2,23 @@ import asyncio
 import collections
 
 
+class AsyncStreamIterator(Generic[_T]):
+    def __init__(self, read_func: Callable[[], Awaitable[_T]]) -> None:
+        self.read_func = read_func
+
+    def __aiter__(self) -> "AsyncStreamIterator[_T]":
+        return self
+
+    async def __anext__(self) -> _T:
+        try:
+            rv = await self.read_func()
+        except Exception:
+            raise StopAsyncIteration
+        if rv == b"":
+            raise StopAsyncIteration
+        return rv
+
+
 class StreamReader(AsyncStreamReaderMixin):
 
     def __init__(
