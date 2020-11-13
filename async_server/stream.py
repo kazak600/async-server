@@ -1,15 +1,20 @@
 import asyncio
 import collections
 
+from typing import Generic, Callable, Awaitable, TypeVar, Optional
 
-class AsyncStreamIterator(Generic[_T]):
-    def __init__(self, read_func: Callable[[], Awaitable[_T]]) -> None:
+
+_Type = TypeVar("_Type")
+
+
+class AsyncStreamIterator(Generic[_Type]):
+    def __init__(self, read_func: Callable[[], Awaitable[_Type]]) -> None:
         self.read_func = read_func
 
-    def __aiter__(self) -> "AsyncStreamIterator[_T]":
+    def __aiter__(self) -> "AsyncStreamIterator[_Type]":
         return self
 
-    async def __anext__(self) -> _T:
+    async def __anext__(self) -> _Type:
         try:
             rv = await self.read_func()
         except Exception:
