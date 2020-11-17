@@ -2,6 +2,12 @@ import logging
 from typing import MutableMapping, Any, Iterable, Optional, Mapping, Iterator
 
 
+class CleanupContext:
+
+    def __init__(self):
+        pass
+
+
 class Application(MutableMapping[str, Any]):
 
     def __init__(
