@@ -5,7 +5,8 @@ from typing import MutableMapping, Any, Iterable, Optional, Mapping, Iterator
 class CleanupContext:
 
     def __init__(self):
-        pass
+        self.on_startup = None
+        self.on_cleanup = None
 
 
 class UrlDispatcher:
@@ -49,8 +50,8 @@ class Application(MutableMapping[str, Any]):
         self._on_shutdown = Signal(self)
         self._on_cleanup = Signal(self)
         self._cleanup_ctx = CleanupContext()
-        self._on_startup.append(self._cleanup_ctx._on_startup)
-        self._on_cleanup.append(self._cleanup_ctx._on_cleanup)
+        self._on_startup.append(self._cleanup_ctx.on_startup)
+        self._on_cleanup.append(self._cleanup_ctx.on_cleanup)
         self._client_max_size = client_max_size
 
     def __eq__(self, other: object) -> bool:
