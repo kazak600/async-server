@@ -8,6 +8,12 @@ class CleanupContext:
         pass
 
 
+class UrlDispatcher:
+
+    def __init__(self):
+        pass
+
+
 class Application(MutableMapping[str, Any]):
 
     def __init__(
