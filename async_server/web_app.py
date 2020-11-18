@@ -15,6 +15,12 @@ class UrlDispatcher:
         pass
 
 
+class Signal:
+
+    def __init__(self, app):
+        self.application = app
+
+
 class Application(MutableMapping[str, Any]):
 
     def __init__(
