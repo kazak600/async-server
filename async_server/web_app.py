@@ -1,6 +1,8 @@
 import logging
 from typing import MutableMapping, Any, Iterable, Optional, Mapping, Iterator
 
+from async_server.signals import Signal
+
 
 class CleanupContext:
 
@@ -13,12 +15,6 @@ class UrlDispatcher:
 
     def __init__(self):
         pass
-
-
-class Signal:
-
-    def __init__(self, app):
-        self.application = app
 
 
 class Application(MutableMapping[str, Any]):
@@ -39,7 +35,7 @@ class Application(MutableMapping[str, Any]):
         self._handler_args = handler_args
         self.logger = logger
 
-        self._middlewares = FrozenList(middlewares)
+        self._middlewares = middlewares
 
         # initialized on freezing
         self._middlewares_handlers = tuple()
