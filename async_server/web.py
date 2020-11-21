@@ -28,3 +28,34 @@ def run_app(
             access_log.setLevel(logging.DEBUG)
         if not access_log.hasHandlers():
             access_log.addHandler(logging.StreamHandler())
+
+    try:
+        main_task = loop.create_task(
+            _run_app(
+                app,
+                host=host,
+                port=port,
+                path=path,
+                sock=sock,
+                shutdown_timeout=shutdown_timeout,
+                keepalive_timeout=keepalive_timeout,
+                ssl_context=ssl_context,
+                print=print,
+                backlog=backlog,
+                access_log_class=access_log_class,
+                access_log_format=access_log_format,
+                access_log=access_log,
+                handle_signals=handle_signals,
+                reuse_address=reuse_address,
+                reuse_port=reuse_port,
+            )
+        )
+        loop.run_until_complete(main_task)
+    except (GracefulExit, KeyboardInterrupt):  # pragma: no cover
+        pass
+    finally:
+        _cancel_tasks({main_task}, loop)
+        _cancel_tasks(all_tasks(loop), loop)
+        loop.run_until_complete(loop.shutdown_asyncgens())
+        loop.close()
+        asyncio.set_event_loop(None)
