@@ -1,3 +1,34 @@
+import asyncio
+from typing import Optional, Union, Callable, Set
+
+from async_server.web_app import Application
+
+
+async def _run_app(
+    app: Union[Application, Awaitable[Application]],
+    *,
+    host: Optional[Union[str, HostSequence]] = None,
+    port: Optional[int] = None,
+    path: Optional[str] = None,
+    sock: Optional[socket.socket] = None,
+    shutdown_timeout: float = 60.0,
+    keepalive_timeout: float = 75.0,
+    ssl_context: Optional[SSLContext] = None,
+    print: Optional[Callable[..., None]] = print,
+    backlog: int = 128,
+    access_log_class: Type[AbstractAccessLogger] = AccessLogger,
+    access_log_format: str = AccessLogger.LOG_FORMAT,
+    access_log: Optional[logging.Logger] = access_logger,
+    handle_signals: bool = True,
+    reuse_address: Optional[bool] = None,
+    reuse_port: Optional[bool] = None,
+) -> None:
+    if asyncio.iscoroutine(app):
+        app = await app  # type: ignore
+
+    app = cast(Application, app)
+
+
 def _cancel_tasks(
     to_cancel: Set["asyncio.Task[Any]"], loop: asyncio.AbstractEventLoop
 ) -> None:
