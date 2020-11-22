@@ -6,7 +6,7 @@ from async_server.web_app import Application
 
 class MainTestCase(unittest.TestCase):
 
-    async def test_function_signal_dispatch(self) -> None:
+    async def test_function_signal_dispatch(self):
         app = Application()
         signal = Signal(app)
         kwargs = {'foo': 1, 'bar': 2}

@@ -10,3 +10,6 @@ class Signal(list):
         """
         for receiver in self:
             await receiver(*args, **kwargs)
+
+    def freeze(self):
+        pass
