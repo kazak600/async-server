@@ -28,6 +28,18 @@ async def _run_app(
 
     app = cast(Application, app)
 
+    runner = AppRunner(
+        app,
+        handle_signals=handle_signals,
+        access_log_class=access_log_class,
+        access_log_format=access_log_format,
+        access_log=access_log,
+        keepalive_timeout=keepalive_timeout,
+    )
+
+    await runner.setup()
+
+
 
 def _cancel_tasks(
     to_cancel: Set["asyncio.Task[Any]"], loop: asyncio.AbstractEventLoop
