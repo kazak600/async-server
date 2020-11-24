@@ -41,7 +41,37 @@ async def _run_app(
 
     sites = []
 
-
+    try:
+        if host is not None:
+            if isinstance(host, (str, bytes, bytearray, memoryview)):
+                sites.append(
+                    TCPSite(
+                        runner,
+                        host,
+                        port,
+                        shutdown_timeout=shutdown_timeout,
+                        ssl_context=ssl_context,
+                        backlog=backlog,
+                        reuse_address=reuse_address,
+                        reuse_port=reuse_port,
+                    )
+                )
+            else:
+                for h in host:
+                    sites.append(
+                        TCPSite(
+                            runner,
+                            h,
+                            port,
+                            shutdown_timeout=shutdown_timeout,
+                            ssl_context=ssl_context,
+                            backlog=backlog,
+                            reuse_address=reuse_address,
+                            reuse_port=reuse_port,
+                        )
+                    )
+    finally:
+        pass
 
 
 def _cancel_tasks(
