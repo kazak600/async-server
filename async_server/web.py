@@ -39,6 +39,9 @@ async def _run_app(
 
     await runner.setup()
 
+    sites = []
+
+
 
 
 def _cancel_tasks(
