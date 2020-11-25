@@ -57,8 +57,7 @@ async def _run_app(
                     )
                 )
             else:
-                for h in host:
-                    sites.append(None)
+                pass
     finally:
         pass
 
