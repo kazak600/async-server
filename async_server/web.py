@@ -56,8 +56,6 @@ async def _run_app(
                         reuse_port=reuse_port,
                     )
                 )
-            else:
-                pass
     finally:
         pass
 
