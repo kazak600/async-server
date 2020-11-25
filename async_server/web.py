@@ -58,18 +58,7 @@ async def _run_app(
                 )
             else:
                 for h in host:
-                    sites.append(
-                        TCPSite(
-                            runner,
-                            h,
-                            port,
-                            shutdown_timeout=shutdown_timeout,
-                            ssl_context=ssl_context,
-                            backlog=backlog,
-                            reuse_address=reuse_address,
-                            reuse_port=reuse_port,
-                        )
-                    )
+                    sites.append(None)
     finally:
         pass
 
