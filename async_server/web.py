@@ -4,6 +4,10 @@ from typing import Optional, Union, Callable, Set
 from async_server.web_app import Application
 
 
+class AppRunner(object):
+    pass
+
+
 async def _run_app(
     app: Union[Application, Awaitable[Application]],
     *,
