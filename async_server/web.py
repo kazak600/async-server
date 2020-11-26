@@ -4,7 +4,11 @@ from typing import Optional, Union, Callable, Set
 from async_server.web_app import Application
 
 
-class AppRunner(object):
+class AppRunner:
+    pass
+
+
+class TCPSite:
     pass
 
 
@@ -48,7 +52,18 @@ async def _run_app(
     try:
         if host is not None:
             if isinstance(host, (str, bytes, bytearray, memoryview)):
-                sites.append(None)
+                sites.append(
+                    TCPSite(
+                        runner,
+                        host,
+                        port,
+                        shutdown_timeout=shutdown_timeout,
+                        ssl_context=ssl_context,
+                        backlog=backlog,
+                        reuse_address=reuse_address,
+                        reuse_port=reuse_port,
+                    )
+                )
     finally:
         pass
 
