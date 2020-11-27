@@ -5,7 +5,14 @@ from async_server.web_app import Application
 
 
 class AppRunner:
-    pass
+
+    def __init__(self, app, handle_signals, access_log_class, access_log_format, access_log, keepalive_timeout):
+        self.app = app
+        self.handle_signals = handle_signals
+        self.access_log_class = access_log_class
+        self.access_log_format = access_log_format
+        self.access_log = access_log
+        self.keepalive_timeout = keepalive_timeout
 
 
 class TCPSite:
@@ -48,7 +55,7 @@ async def _run_app(
     app = cast(Application, app)
 
     runner = AppRunner(
-        app,
+        app=app,
         handle_signals=handle_signals,
         access_log_class=access_log_class,
         access_log_format=access_log_format,
