@@ -72,9 +72,9 @@ async def _run_app(
             if isinstance(host, (str, bytes, bytearray, memoryview)):
                 sites.append(
                     TCPSite(
-                        runner,
-                        host,
-                        port,
+                        runner=runner,
+                        host=host,
+                        port=port,
                         shutdown_timeout=shutdown_timeout,
                         ssl_context=ssl_context,
                         backlog=backlog,
