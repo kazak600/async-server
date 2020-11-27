@@ -9,7 +9,18 @@ class AppRunner:
 
 
 class TCPSite:
-    pass
+
+    def __init__(self, runner, host, port, shutdown_timeout, ssl_context,
+                 backlog, reuse_address, reuse_port):
+
+        self.runner = runner
+        self.host = host
+        self.port = port
+        self.shutdown_timeout = shutdown_timeout
+        self.ssl_context = ssl_context
+        self.backlog = backlog
+        self.reuse_address = reuse_address
+        self.reuse_port = reuse_port
 
 
 async def _run_app(
