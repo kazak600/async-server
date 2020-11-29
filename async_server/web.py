@@ -16,6 +16,9 @@ class AppRunner:
         self.access_log = access_log
         self.keepalive_timeout = keepalive_timeout
 
+    async def setup(self):
+        raise NotImplementedError()
+
 
 class TCPSite:
 
