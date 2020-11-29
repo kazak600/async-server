@@ -1,5 +1,7 @@
 import asyncio
-from typing import Optional, Union, Callable, Set
+import socket
+from typing import Optional, Union, Callable, Set, Awaitable, Type
+from ssl import SSLContext
 
 from async_server.web_app import Application
 
@@ -40,7 +42,7 @@ async def _run_app(
     shutdown_timeout: float = 60.0,
     keepalive_timeout: float = 75.0,
     ssl_context: Optional[SSLContext] = None,
-    print: Optional[Callable[..., None]] = print,
+    _print: Optional[Callable[..., None]] = print,
     backlog: int = 128,
     access_log_class: Type[AbstractAccessLogger] = AccessLogger,
     access_log_format: str = AccessLogger.LOG_FORMAT,
