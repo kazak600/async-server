@@ -1,7 +1,9 @@
 import asyncio
 import socket
-from typing import Optional, Union, Callable, Set, Awaitable, Type
+import logging
+
 from ssl import SSLContext
+from typing import Optional, Union, Callable, Set, Awaitable, Type
 
 from async_server.web_app import Application
 
@@ -45,7 +47,7 @@ async def _run_app(
     shutdown_timeout: float = 60.0,
     keepalive_timeout: float = 75.0,
     ssl_context: Optional[SSLContext] = None,
-    _print: Optional[Callable[..., None]] = print,
+    print_func: Optional[Callable[..., None]] = None,
     backlog: int = 128,
     access_log_class: Type[AbstractAccessLogger] = AccessLogger,
     access_log_format: str = AccessLogger.LOG_FORMAT,
@@ -56,6 +58,9 @@ async def _run_app(
 ) -> None:
     if asyncio.iscoroutine(app):
         app = await app  # type: ignore
+
+    if print_func is None:
+        print_func = print
 
     app = cast(Application, app)
 
@@ -128,7 +133,7 @@ def run_app(
     shutdown_timeout: float = 60.0,
     keepalive_timeout: float = 75.0,
     ssl_context: Optional[SSLContext] = None,
-    print: Optional[Callable[..., None]] = print,
+    print_func: Optional[Callable[..., None]] = None,
     backlog: int = 128,
     access_log_class: Type[AbstractAccessLogger] = AccessLogger,
     access_log_format: str = AccessLogger.LOG_FORMAT,
@@ -159,7 +164,7 @@ def run_app(
                 shutdown_timeout=shutdown_timeout,
                 keepalive_timeout=keepalive_timeout,
                 ssl_context=ssl_context,
-                print=print,
+                print_func=print_func,
                 backlog=backlog,
                 access_log_class=access_log_class,
                 access_log_format=access_log_format,
