@@ -122,9 +122,12 @@ def _cancel_tasks(
             )
 
 
+class GracefulExit(Exception):
+    pass
+
+
 def run_app(
     app: Union[Application, Awaitable[Application]],
-    *,
     debug: bool = False,
     host: Optional[Union[str, HostSequence]] = None,
     port: Optional[int] = None,
