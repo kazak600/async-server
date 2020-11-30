@@ -34,7 +34,7 @@ class ChunkTupleAsyncStreamIterator:
         return self
 
     async def __anext__(self) -> Tuple[bytes, bool]:
-        rv = await self._stream.readchunk()
+        rv = await self._stream.read_chunk()
         if rv == (b"", False):
             raise StopAsyncIteration
         return rv
@@ -93,3 +93,6 @@ class StreamReader:
         Python-3.5 available for Python 3.5+ only
         """
         return ChunkTupleAsyncStreamIterator(self)  # type: ignore
+
+    async def read_chunk(self):
+        return b"", True
